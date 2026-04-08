@@ -11,13 +11,14 @@
     "src/",
     "bin/",
     "dist/",
+    "scripts/",
     "package.json",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "build": "bun build --compile --minify src/index.ts --outfile dist/lark-acp",
-    "postinstall": "node scripts/download-binary.js",
+    "postinstall": "node scripts/download-binary.cjs",
     "install-bin": "bun run build && cp dist/lark-acp ~/.local/bin/lark-acp && codesign --sign - ~/.local/bin/lark-acp && echo 'Installed to ~/.local/bin/lark-acp'",
     "start": "bun run src/index.ts",
     "dev": "bun run --watch src/index.ts",
