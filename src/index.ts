@@ -1,4 +1,4 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 
 import * as lark from "@larksuiteoapi/node-sdk";
 // All imports hoisted first — clean and predictable module load order.

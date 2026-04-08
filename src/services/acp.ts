@@ -1,4 +1,5 @@
 import { type ChildProcessByStdio, spawn } from "node:child_process";
+import { readFile, writeFile } from "node:fs/promises";
 import { Readable, Writable } from "node:stream";
 import type {
   Client,
@@ -95,20 +96,20 @@ class LarkAcpClient implements Client {
 
   async readTextFile(params: ReadTextFileRequest): Promise<ReadTextFileResponse> {
     try {
-      const file = Bun.file(params.path);
-      if (!(await file.exists())) {
-        throw new Error(`File not found: ${params.path}`);
-      }
-      const content = await file.text();
+      const content = await readFile(params.path, "utf-8");
       return { content };
     } catch (err) {
-      throw new Error(`readTextFile failed for "${params.path}": ${String(err)}`);
+      const msg =
+        (err as NodeJS.ErrnoException).code === "ENOENT"
+          ? `File not found: ${params.path}`
+          : `readTextFile failed for "${params.path}": ${String(err)}`;
+      throw new Error(msg);
     }
   }
 
   async writeTextFile(params: WriteTextFileRequest): Promise<WriteTextFileResponse> {
     try {
-      await Bun.write(params.path, params.content);
+      await writeFile(params.path, params.content, "utf-8");
       return {};
     } catch (err) {
       throw new Error(`writeTextFile failed for "${params.path}": ${String(err)}`);
