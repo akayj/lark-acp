@@ -1,0 +1,22 @@
+{
+  "lark": {
+    "appId": "cli_xxxxxxxxxxxx",
+    "appSecret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "botName": "AI Assistant",
+
+    "encryptKey": "",
+    "verificationToken": ""
+  },
+
+  "agent": "claude",
+
+  "acp": {
+    "cwd": "",
+    "idleTimeoutMs": 1800000,
+    "maxConcurrent": 10,
+    "showThoughts": false,
+    "mcpServers": []
+  },
+
+  "autoApprovePermissions": true
+}

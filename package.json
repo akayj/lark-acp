@@ -1,0 +1,36 @@
+{
+  "name": "lark-acp",
+  "version": "1.0.0",
+  "description": "Bridge Lark/Feishu messages to any ACP-compatible AI agent",
+  "module": "src/index.ts",
+  "type": "module",
+  "bin": {
+    "lark-acp": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "bun build --compile --minify src/index.ts --outfile dist/lark-acp",
+    "install-bin": "bun run build && cp dist/lark-acp ~/.local/bin/lark-acp && codesign --sign - ~/.local/bin/lark-acp && echo 'Installed to ~/.local/bin/lark-acp'",
+    "start": "bun run src/index.ts",
+    "dev": "bun run --watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint src/",
+    "format": "biome format --write src/",
+    "check": "biome check src/"
+  },
+  "keywords": ["lark", "feishu", "acp", "agent", "ai"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@agentclientprotocol/sdk": "^0.18.1",
+    "@larksuiteoapi/node-sdk": "^1.41.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "@types/bun": "latest",
+    "@types/node": "^25.5.2",
+    "typescript": "^6.0.2"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+}
