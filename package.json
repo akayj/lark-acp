@@ -1,6 +1,6 @@
 {
   "name": "lark-acp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bridge Lark/Feishu messages to any ACP-compatible AI agent",
   "module": "src/index.ts",
   "type": "module",
