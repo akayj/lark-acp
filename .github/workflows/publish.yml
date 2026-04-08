@@ -40,6 +40,4 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Publish to npm
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --access public
