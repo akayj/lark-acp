@@ -8,16 +8,19 @@ const PKG = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 const VERSION = PKG.version;
 
 // Map platform/arch to release asset name
+// Currently supported: macOS arm64, Linux x86_64
 function getPlatformId() {
   const platform = process.platform;
   const arch = process.arch;
 
   if (platform === "darwin" && arch === "arm64") return "macos-arm64";
-  if (platform === "darwin" && arch === "x64") return "macos-x86_64";
   if (platform === "linux" && arch === "x64") return "linux-x86_64";
-  if (platform === "win32" && arch === "x64") return "windows-x86_64";
 
-  console.warn(`⚠️  Unsupported platform: ${platform}-${arch}, skipping binary download`);
+  console.warn(
+    `⚠️  Unsupported platform: ${platform}-${arch}\n` +
+      `   Currently supported: macOS arm64, Linux x86_64\n` +
+      `   Falling back to source build (requires Bun)`
+  );
   return null;
 }
 
@@ -50,7 +53,7 @@ async function downloadBinary() {
   const platformId = getPlatformId();
   if (!platformId) return;
 
-  const binaryName = process.platform === "win32" ? "lark-acp.exe" : "lark-acp";
+  const binaryName = "lark-acp";
   const dest = path.join("bin", binaryName);
 
   // Skip if binary already exists
@@ -59,7 +62,7 @@ async function downloadBinary() {
     return;
   }
 
-  const assetName = `${process.platform === "win32" ? "lark-acp.exe" : `lark-acp-${platformId}`}`;
+  const assetName = `lark-acp-${platformId}`;
   const url = `https://github.com/akayj/lark-acp/releases/download/v${VERSION}/${assetName}`;
 
   try {

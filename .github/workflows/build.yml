@@ -11,25 +11,15 @@ jobs:
     strategy:
       matrix:
         include:
-          # macOS arm64
+          # macOS arm64 (Apple Silicon)
           - os: macos-latest
             arch: arm64
             artifact: lark-acp-macos-arm64
-
-          # macOS x86_64
-          - os: macos-13
-            arch: x64
-            artifact: lark-acp-macos-x86_64
 
           # Linux x86_64
           - os: ubuntu-latest
             arch: x64
             artifact: lark-acp-linux-x86_64
-
-          # Windows x86_64
-          - os: windows-latest
-            arch: x64
-            artifact: lark-acp.exe
 
     runs-on: ${{ matrix.os }}
 
@@ -53,15 +43,10 @@ jobs:
       - name: Build binary
         run: bun run build
 
-      - name: Rename binary for artifact
-        shell: bash
+      - name: Prepare artifact
         run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            cp dist/lark-acp.exe ${{ matrix.artifact }}
-          else
-            cp dist/lark-acp ${{ matrix.artifact }}
-            chmod +x ${{ matrix.artifact }}
-          fi
+          cp dist/lark-acp ${{ matrix.artifact }}
+          chmod +x ${{ matrix.artifact }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
