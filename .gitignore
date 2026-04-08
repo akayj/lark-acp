@@ -4,6 +4,9 @@ node_modules
 # output
 out
 dist
+bin/lark-acp*
+bin/*.exe
+!bin/.gitkeep
 *.tgz
 
 # code coverage
